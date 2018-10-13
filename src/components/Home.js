@@ -2,7 +2,25 @@ import React, { Component } from 'react';
 import ShowsForm from "../components/ShowsForm";
 import axios from "axios";
 import { HashLink as Link } from 'react-router-hash-link';
+import AppBar from './AppBar';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import NoImg from '../../src/404.png'
 
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    height: 200,
+    width: 300,
+  },
+  control: {
+    padding: theme.spacing.unit * 2,
+  },
+});
 
 class Home extends Component { 
   state = {
@@ -43,39 +61,76 @@ class Home extends Component {
   }
 
 render() {
+  const { classes } = this.props;
   return (
       <div className="App">
       {/* start header */}
-          <header className="App-header">
-          <p><code>TvMaze Shows Api</code></p>
-        </header> 
+        <AppBar/>
       {/* end header */}
-
       {/* start search form */}
         <ShowsForm getShow={this.getShow}/> 
       {/* end search form */}
 
       {/* start content result div*/}
         <div>
-          <ul>
             {
               // no matches error
               this.state.searchShows === '404' ? <p>No Mataches Result for this keyword</p> :
               // check if shows all or shows seach result only
-                this.state.searchShows.length === 0 ? 
-                // show all shows
-                this.state.shows.map(show => <li key={show.id}><Link to={"/show/" + show.id}>{show.name}</Link></li>) :
-                // show the search for result only
-                this.state.searchShows.map(show => <li key={show.show.id}><Link to={"/show/" + show.show.id}>{show.show.name}</Link></li>) 
-            }
-          </ul>
+                this.state.searchShows.length === 0
+                 ? 
+                //  start grid forrepresent all shows
+                 <Grid container className={classes.root}>
+                  <Grid item xs={12}>
+                    <Grid container className={classes.demo} justify="center">
+                      {this.state.shows.map(show => (
+                        <Grid key={show.id} item>
+                          <Paper className={classes.paper}>
+                          <Link to={"/show/" + show.id}>{show.name}</Link>
+                          <br/><br/>
+                          <img
+                          alt="tvMaze" 
+                          style={{ width :"110px ",heigth : "100px"}} 
+                          src={show.image == null ? NoImg : show.image.medium}/>
+                          </Paper>
+                        </Grid>
+                      ))}
+                    </Grid>
+                  </Grid>
+                </Grid>
+                //  end grid forrepresent all shows
+                :
+                //  start represent search shows only
+                <Grid container className={classes.root}>
+                  <Grid item xs={12}>
+                    <Grid container className={classes.demo} justify="center">
+                      {this.state.searchShows.map(show => (
+                        <Grid key={show.show.id} item>
+                          <Paper className={classes.paper}>
+                          <Link to={"/show/" + show.show.id}>{show.show.name}</Link>
+                          <br/><br/>
+                          <img
+                          alt="tvMaze"  
+                          style={{ width :"110px ",heigth : "100px"}} 
+                          src={show.show.image == null ? NoImg : show.show.image.medium}/>
+                          </Paper>
+                        </Grid>
+                      ))} 
+                    </Grid>
+                  </Grid>
+                </Grid>
+            }   
         </div>
+        <br/>
         {/* go home after 404 */}
-        {this.state.searchShows === '404' || this.state.searchShows.length > 0 ? <a href="/" >Back to all shows</a>  :''}
-      {/* end content result div*/}
+        {this.state.searchShows === '404' || this.state.searchShows.length > 0 ? <a href="/" ><h3>Back to all shows</h3></a>  :''}
       </div> 
+      // end content result div
   );
 }
 }
+Home.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-export default Home;
+export default withStyles(styles)(Home);
