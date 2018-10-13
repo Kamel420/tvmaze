@@ -75,7 +75,7 @@ render() {
         <div>
             {
               // no matches error
-              this.state.searchShows === '404' ? <p>No Mataches Result for this keyword</p> :
+              this.state.searchShows === '404' ? <h2>No Mataches Result for this keyword</h2> :
               // check if shows all or shows seach result only
                 this.state.searchShows.length === 0
                  ? 
@@ -88,10 +88,10 @@ render() {
                           <Paper className={classes.paper}>
                           <Link to={"/show/" + show.id}>{show.name}</Link>
                           <br/><br/>
-                          <img
+                          <Link to={"/show/" + show.id}><img
                           alt="tvMaze" 
                           style={{ width :"110px ",heigth : "100px"}} 
-                          src={show.image == null ? NoImg : show.image.medium}/>
+                          src={show.image == null ? NoImg : show.image.medium}/></Link>
                           </Paper>
                         </Grid>
                       ))}
@@ -109,10 +109,10 @@ render() {
                           <Paper className={classes.paper}>
                           <Link to={"/show/" + show.show.id}>{show.show.name}</Link>
                           <br/><br/>
-                          <img
+                          <Link to={"/show/" + show.show.id}><img
                           alt="tvMaze"  
                           style={{ width :"110px ",heigth : "100px"}} 
-                          src={show.show.image == null ? NoImg : show.show.image.medium}/>
+                          src={show.show.image == null ? NoImg : show.show.image.medium}/></Link>
                           </Paper>
                         </Grid>
                       ))} 
@@ -122,7 +122,7 @@ render() {
             }   
         </div>
         <br/>
-        {/* go home after 404 */}
+        {/* go home after 404  and on search*/}
         {this.state.searchShows === '404' || this.state.searchShows.length > 0 ? <a href="/" ><h3>Back to all shows</h3></a>  :''}
       </div> 
       // end content result div

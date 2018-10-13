@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import IconButton from '@material-ui/core/IconButton';
 
+// styles for material ui
 const styles = {
   root: {
     flexGrow: 1,
@@ -20,6 +21,7 @@ const styles = {
   },
 };
 
+// top-left corner icon
 function HomeIcon(props) {
   return (
     <SvgIcon {...props}>
@@ -28,6 +30,7 @@ function HomeIcon(props) {
   );
 }
 
+// materil ui header
 function appBar(props) {
   const { classes } = props;
   return (
