@@ -15,7 +15,6 @@ class Show extends Component {
     .then((response) => {
       //collect results
       this.setState({ showCollection : response.data })
-      console.log(this.state.showCollection);
     })
   }
 
@@ -27,7 +26,6 @@ render() {
             <p><code>TvMaze Shows Api</code></p>
         </header> 
         {/* end header */}
-        <p>Works !!</p>
         {this.state.showCollection.name}
 
       </div>
