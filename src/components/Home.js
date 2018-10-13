@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ShowsForm from "../components/ShowsForm";
 import axios from "axios";
-// import { HashLink as Link } from 'react-router-hash-link';
+import { HashLink as Link } from 'react-router-hash-link';
 
 
 class Home extends Component { 
@@ -44,7 +44,7 @@ class Home extends Component {
 
 render() {
   return (
-      <div className="App" id="offset">
+      <div className="App">
       {/* start header */}
           <header className="App-header">
           <p><code>TvMaze Shows Api</code></p>
@@ -64,9 +64,9 @@ render() {
               // check if shows all or shows seach result only
                 this.state.searchShows.length === 0 ? 
                 // show all shows
-                this.state.shows.map(show => <li key={show.id}>{show.name}</li>) :
+                this.state.shows.map(show => <li key={show.id}><Link to={"/show/" + show.id}>{show.name}</Link></li>) :
                 // show the search for result only
-                this.state.searchShows.map(show => <li key={show.show.id}>{show.show.name}</li>) 
+                this.state.searchShows.map(show => <li key={show.show.id}><Link to={"/show/" + show.show.id}>{show.show.name}</Link></li>) 
             }
           </ul>
         </div>
